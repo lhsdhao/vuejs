@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue的基本 代码</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <style>
+    .red{
+            color:red;
+        }
+    .thin{
+        font-weight: 100;
+    }
+    .italic{
+        font-style: italic;
+    }
+    </style>
+
+</head>
+<body>
+    <div id="app">
+        <!-- 通过三元表达式近些写法 -->
+        <h1 :class="['thin',flag?'red':'',]">很大的H1</h1>
+
+        <!-- 通过数组进行类写法 -->
+        <h1 :class="['red','thin',{'italic':flag}]">很大的H1</h1> 
+
+        <!-- 推荐,class对象写入法,需要:绑定,对象里面类名不需要加''' -->
+        <h1 :class="{red:flag,thin:true,}">很大的H1</h1> 
+
+    </div>
+    <script>
+        var vm = new Vue({//new Vue的这个实例,就是MVVM中的VM层
+            el:'#app',//表示当创建一个vue实例之后,要控制那个区域
+            data:{//data属性中,存放的是el中要用到的数据
+                msg:'',//通过指令,直接渲染到界面,不需要操作DOM
+                flag : false,
+            },
+            methods:{//函数对象区
+
+            },
+        })
+        
+    </script>
+</body>
+</html>

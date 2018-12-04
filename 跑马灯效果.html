@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>跑马灯</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+
+    <div id="app">
+
+        <h4>{{ msg }}</h4>
+
+        <input type="button" value="浪起来" @click = 'lang()'>
+
+        <input type="button" value="低调" @click = 'stop()'>
+
+
+    </div>
+
+    <script>
+        
+        var vm = new Vue({
+            el:'#app',//控制区域
+            data:{  //vm属性  属性对象
+
+            msg:'猥琐繁育,别浪~~!',
+            timeId:null,
+            },
+            methods:{//函数对象
+                lang:function(){//在vm实例中,如果想要调用data上的数据,需要this.属性
+                    if(this.timeId){
+                        return ;
+                    }
+                    this.timeId = setInterval(()=>{
+                        console.log(this);//()=>{this}内部的this永远指向外部的shtis
+                        console.log(this.msg);
+                        var start = this.msg.slice(0,1);
+                        var end = this.msg.slice(1);
+                        this.msg = end + start ;
+                    },500);
+                
+                },
+                stop(){
+                   clearInterval(this.timeId); //停止定时器
+                   this.timeId = null;//每次清楚定时器之后,需要重新把timeID设置为none,已便开启定时器
+                }
+            }
+        })
+    // 分析:1.添加开始事件
+    // 2.在按钮事件处理函数中,写上相关的业务逻辑代码:拿到字符串,然后进行截取操作,substring()进行截取
+    // 吧第一个字符截取出来,放到最后一个位置
+    // 3.添加定时器,实现自动截取的功能
+        
+
+
+
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue的基本 代码</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <style>
+        .inner{
+        height: 100px;
+        background-color: cornflowerblue;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app" @click=divHandler>
+        <!-- 使用.captrue   实现捕获出发事件机制,一般用于外层 -->
+        <div class="inner">
+
+            <!-- @click.stop 修饰符,阻止冒泡可以用到 -->
+            <input type="button" value="戳他" @click.stop.once="btnHandler">
+
+            <!-- @click.prevent 修饰符,阻止默认行为,例如跳转 -->
+            <a href="http://baidu.com" @click.prevent='linkclick'>去百度</a>
+
+            <!-- .self 自身事件触发,忽略冒泡和捕获 -->
+
+            <!-- .once 设置一次性触发事件 -->
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({//new Vue的这个实例,就是MVVM中的VM层
+            el: '#app',//表示当创建一个vue实例之后,要控制那个区域
+            data: {//data属性中,存放的是el中要用到的数据
+                msg: '',//通过指令,直接渲染到界面,不需要操作DOM
+            },
+            methods: {//函数对象区
+                divHandler() { console.log('inner') },//冒泡
+                btnHandler() { console.log('btn') },
+                linkclick() { console.log('link') },
+            },
+        })
+
+    </script>
+</body>
+
+</html>

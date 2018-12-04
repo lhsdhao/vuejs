@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- v -cloak 属性,设置了之后,只有当数据渲染完成后才进行显示,增强了用户体验
+        但是,被操作的元素,需要设置display:none;才可以    
+        -->
+        <p v-cloak>{{ msg }}</p> 
+
+        <!-- v-text 会覆盖数据  同样解决了闪烁问题,,已属性的方式解决, -->
+        <p v-text = 'msg2'></p> 
+
+        <!-- v-html = 'msg2' 会正确解析html文本,但是也会覆盖 -->
+        <p v-html = 'msg2'></p>
+
+        <!--  :  v-bind:是vue中提供用于绑定属性的指令,:后面等号对应的值认为是Vue的变量 -->
+        <input type="button" value="按钮" :title = 'mytitle+"hello"'>
+
+        <!--  @  v-on 用来绑定事件的指定 -->
+        <input type="button" value="事件按钮" @click = 'show()'>
+
+
+        
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'数据',//插值表达式,和v-text不能解析html格式
+                msg2:'<h1>h1标签</h1>',
+                mytitle:'自己定义的title',
+            },
+            methods:{//methods对象中,存储了当前Vue实例中所有可用的事件
+                show:()=>{alert(123)},
+            },
+        })
+    </script>
+</body>
+</html>
