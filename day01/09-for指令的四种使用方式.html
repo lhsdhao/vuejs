@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+       
+        <!-- v-for ' ele in list '  使用 v-for 指令进行循环 -->
+        <p v-for = '(item,i) in list'  >{{item}}-->{{i}}</p>
+        <!-- 也可以用v-text ,但是无法输出索引-->
+        <!-- <p v-for= '(item,i) in list' v-text = 'item' ></p> -->
+
+        <!-- 用 v- for 遍历数组中的对象 -- ,每个元素需要加key,示意为唯一标识-->
+       
+        <span v-for = '(e,i) in list1'  >{{e.id}}--->{{e.name}}-->{{i}}</span>
+
+
+        <!-- 使用v-for 对对象进行变脸 -- ,每个元素需要加key,示意为唯一标识-->
+        <p v-for = '(v,k,i) in user'  >{{v}}--->{{k}}---{{i}}</p>
+
+        <!-- v-for 进行数字循环,数字从1开始 ,每个元素需要加key,示意为唯一标识-->
+        <p v-for = 'count in 5'  :key = 'count'> {{count}}</p>
+
+
+    </div>
+    <script>
+        
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'我是Vuejs',
+                list:[1,2,3,4,5,6,7],
+                list1:[{id:1,name:'zs1'},{id:2,name:'zs2'},{id:3,name:'zs2'}],
+                user:{name:'赵四',age:18,gender:'男'},
+
+            },
+        })
+        
+    </script>
+</body>
+</html>

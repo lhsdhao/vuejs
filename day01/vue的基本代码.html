@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue的基本 代码</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- {{插值表达式}} -->
+        <p>{{ msg }}</p>
+    </div>
+    <script>
+        var vm = new Vue({//new Vue的这个实例,就是MVVM中的VM层
+            el:'#app',//表示当创建一个vue实例之后,要控制那个区域
+            data:{//data属性中,存放的是el中要用到的数据
+                msg:'欢迎学习vue',//通过指令,直接渲染到界面,不需要操作DOM
+            }
+        })
+        
+    </script>
+</body>
+</html>

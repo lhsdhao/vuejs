@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>品牌管理案例</title>
+    <link rel="stylesheet" href="./lib/bootstrap.min.css">
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- {{插值表达式}} -->
+        <div  class=" panel panel-primary">
+
+            <div class="panel-heading">
+            
+                <h3 class="panel-title">品牌管理系统</h3>
+            
+            </div>
+            <div class="panel-body form-inline">
+                <label for="">
+                    id:
+                    <input type="text" v-model='id'>
+                </label>
+                <label for="">
+                    name:
+                    <!-- keyup.113 = 'add()'也可以,支持所有键盘码-->
+                    <input type="text"  v-model='name' @keyup.enter = 'add()'  >
+
+                </label>
+                <label for="">
+                    提交:
+                    <input type="button" class="btn btn-primary" value='添加' @click = 'add()'>
+                </label>
+                <label for="">
+                    搜索名称关键字:
+                    <input type="text"  v-model='keySearch' v-focus>
+                </label>
+            </div>
+
+        </div>
+        <table class="table table-bordered  table-hover">
+            <tr v-for='item in search(keySearch)'  :key='item.id'> <!--keySearch用到的数据相互绑定里的search ,因为实在for指令里面运行的-->
+                <td >{{ item.id }}</td>
+                <td >{{ item.name }}</td>
+                <td>{{ item.ctime | dataFormat }}</td> <!--使用过滤器,吧原始时间字符串,变成自定义格式时间字符串-->
+                <td> <a href="" @click.prevent = 'delCar(item.id)' v-fontWeight>删除</a></td>  <!-- v-fontWeight自定义函数 -->
+                
+            </tr>
+
+        </table>
+
+
+
+    </div>
+    <script>
+
+
+        String.prototype.format = function () {
+        var values = arguments;
+        return this.replace(/\{(\d+)\}/g, function (match, index) {
+            if (values.length > index) {
+                return values[index];
+            } else {
+                return "";
+            }
+        });
+    };　　
+        
+        //定义一个全局过滤器,进行时间格式化
+        Vue.filter('dataFormat',function (datastr) { 
+
+             // 字符串填补函数   1st:填补完成后多少为,2en:填补什么
+            // console.log('1'.padStart(2,'0'))padEnd(2,'')  
+            var dt = new Date();
+            var y = dt.getFullYear();
+            var m = (dt.getMonth()+1).toString().padStart(2,'0');
+            var d = dt.getDate().toString().padStart(2,'0');;
+            var h = dt.getHours().toString().padStart(2,'0');;
+            var mu = dt.getMinutes().toString().padStart(2,'0');;
+            var s = dt.getSeconds().toString().padStart(2,'0');;
+
+           
+
+            return '{0}-{1}-{2} {3}:{4}:{5}'.format(y,m,d,h,mu,s);
+
+          })
+        
+        //定义一个自定义全局指令,在定义的时候不需要加v-,调用的时候必须要加
+        Vue.directive('focus',{
+
+            //第一个参数,永远是el,是原生的DOM对象
+
+            bind:function(el){
+               console.log('bind');
+            },//bind表示指令绑定到元素上的时候啊,会执行一次,绑定到元素身上了,但是还没有插入到DOM上面去
+
+            inserted:function(el){ el.focus()},//inserted表示元素插入到DOM中的时候,会执行此函数,focus()要插入到BOM去才能执行
+
+            updated:function(el){},//当node更新的时候,会触发update,可能会执行多次
+            
+
+        })
+          
+        // 自定义指令简写方式
+        
+        Vue.directive('fontweight',(el,binding)=>{
+            el.style.fontWeight = 700;
+        })
+
+        var vm = new Vue({//new Vue的这个实例,就是MVVM中的VM层
+            el: '#app',//表示当创建一个vue实例之后,要控制那个区域
+            data: {//data属性中,存放的是el中要用到的数据
+                list:   [
+                            { id: 1, name: "奔驰", ctime: new Date() },
+                            { id: 2, name: "宝马", ctime: new Date() },
+                            { id: 3, name: "保时捷", ctime: new Date() },
+                            { id: 4, name: "兰博基尼", ctime: new Date() },
+                            { id: 5, name: "五菱宏光", ctime: new Date() },
+                            { id: 6, name: "大奔", ctime: new Date() },
+
+                        ],
+                id:'',
+                name:'',
+                keySearch:'',
+            },
+            methods:{
+                add(){
+                    var car = {id:this.id,name:this.name,ctime:new Date()};
+                    this.list.push(car);
+                    this.id = this.name = '';
+                },
+                delCar(id){
+                    // 1.根据ID找到索引
+                    // 2.调用数组 的splice方法,进行删除,
+                    this.list.forEach((element,i) => {
+                        if(element.id == id){
+                            this.list.splice(i,1);
+                            
+                            return;
+                        }
+                    });
+                },
+
+                search(keywords){
+                    var newList = [];
+                    this.list.forEach(item=>{
+                        // if(item.name.indexOf(keywords) != -1){
+                        if(item.name.includes(keywords)){
+                            newList.push(item);
+                        }
+                    })
+                    return newList;
+                }
+            },
+            
+        })
+        
+    </script>
+</body>
+
+</html>

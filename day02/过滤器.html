@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue的基本 代码</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 通过管道符进行filter过滤 ,可以进行传参-->
+        <p>{{ msg | msgFormat('xx') }}</p>
+
+    </div>
+    <script>
+
+        //定义一个vue的全局的过滤器,第一个值为管道符前面的变量
+        Vue.filter('msgFormat',function (msg,info) { 
+            return msg.replace(/vue/g,info);
+         })
+        var vm = new Vue({//new Vue的这个实例,就是MVVM中的VM层
+            el:'#app',//表示当创建一个vue实例之后,要控制那个区域
+            data:{//data属性中,存放的是el中要用到的数据
+                msg:'欢迎学习vue,vue你好,vue很简单',//通过指令,直接渲染到界面,不需要操作DOM
+            }
+        })
+        
+    </script>
+</body>
+</html>
