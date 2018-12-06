@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue的生命周期</title>
+    <style>
+        h5{
+            height: 100%;
+            width: 100%;
+            padding-bottom: 10px;
+            border-bottom: dashed 1px  #ccc;
+        }
+        h2{
+            color: deepskyblue;
+
+        }
+    </style>
+</head>
+<body>
+
+    <h2>beforeCreate()</h2>
+    <h5>时间点:在创建一个Vue实例后,data,methods..还没有创建的时候,唯一的作为就是创建了一个Vue实例</h5>
+
+    <h2>create()</h2>
+    <h5>时间点:创建完成了一个Vue实例,并且data,methods..已经创建完毕</h5>
+
+    <h2>beofrreMount</h2>
+    <h5>时间点:表示模板在内存中已经完成了渲染,但是还没有挂载到页面上的时候</h5>
+
+    <h2>mounted()</h2>
+    <h5>时间点:已经完成了从内存到页面的渲染</h5>
+
+    <h2>beforeUpdate()</h2>
+    <h5>时间点:data的数据已经进行了更新,但是还没有把更新的数据渲染到页面之前</h5>
+
+    <h2>updated()</h2>
+    <h5>时间点:更改后的数据,已经对页面完成了渲染</h5>
+    
+    <h2>brforeDestroy()</h2>
+    <h5>时间点:页面关闭的时候,正在销毁实例的路上,此时data,methods..依然可以</h5>
+
+    <h2>destoryed()</h2>
+    <h5>时间点:页面关闭,Vue销毁,任何数据不在可用</h5>
+
+
+</body>
+
+</html>
