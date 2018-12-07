@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue过渡动画</title>
+    <script src="./lib/vue-2.4.0.js">
+        
+    </script>
+
+    <style> 
+    
+        .v-enter{/*进去之前*/
+            opacity: 0;
+            transform: translateX(100px);
+
+        }
+       .v-leave-to{/*出来之后*/
+            opacity: 0;
+            transform: translateX(200px);
+
+            
+        }
+        .v-enter-active{/*进去的时间段*/
+            transition: all 0.4s ease 0s;
+
+        }
+        .v-leave-active{/*出来的时间段*/
+            transition: all 0.5s ease 0s;
+
+        }
+/*-----------------------------------------------------------*/
+        .my-enter{/*进去之前*/
+            opacity: 0;
+            transform: translateY(100px);
+
+        }
+       .my-leave-to{/*出来之后*/
+            opacity: 0;
+            transform: translateY(200px);
+
+            
+        }
+        .my-enter-active{/*进去的时间段*/
+            transition: all 0.4s ease 0s;
+
+        }
+        .my-leave-active{/*出来的时间段*/
+            transition: all 0.5s ease 0s;
+
+        }
+/* -------------------------------------------------------------
+
+ */
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="点我" @click = 'flag = !flag'>
+        <!-- 需求:点击按钮,切换显示隐藏 -->
+
+        <!-- v-enter v-enter-to v-leave v-leave-to -->
+
+        <transition> <!--<transition>标签,是vue官方提供的标签,只要在这个标签里面的元素,都会执行动画-->
+                <h2 v-show = 'flag'>这是一个h</h2>
+        </transition>
+
+        <!-- 自定义动画前缀,设置name的属性就可以, my-enter -->
+
+        <input type="button" value="h2的按钮" @click = 'flag2 =!flag'> 
+        <transition name = 'my'> <!--<transition>标签,是vue官方提供的标签,只要在这个标签里面的元素,都会执行动画-->
+                <h2 v-show = 'flag2'>这是一个h2</h2>
+        </transition>
+
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                flag:true,
+                flag2:false,
+            },
+            methods:{},
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue的基本 代码</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <style>
+    
+    .ball{
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        border-radius: 50%;
+    }
+    
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="加入购物车" @click = 'flag = !flag'>
+
+
+        <!-- 使用钩子函数进行半场控制 -->
+        <transition
+        @before-enter = 'beforEnter'
+        @enter = 'enter'
+        @after-enter = 'afterEnter' >
+        <!-- 上面3个事件名固定写法 -->
+            <div class="ball" v-show="flag"></div>
+        
+        </transition>
+        
+    </div>
+    <script>
+        var vm = new Vue({//new Vue的这个实例,就是MVVM中的VM层
+            el:'#app',//表示当创建一个vue实例之后,要控制那个区域
+            data:{//data属性中,存放的是el中要用到的数据
+                flag : false,
+            },
+            methods:{
+                //动画钩子函数的第一个参数EL,表示要执行动画的那个el元素,是个原生的DOM对象
+                beforEnter(el){
+                // 入场前
+                el.style.transform = 'translate(0,0)';
+                },
+                enter(el,done){//done()就是afterEnter函数的引用,不加的话,会造成延迟,并且要立即引用
+                // 过程
+                el.offsetHeight
+                el.style.transform = 'translate(90px,300px)';
+                el.style.transition = 'all 0.9s ease 0s';
+                done();
+                },
+                afterEnter(el){
+                // 出场
+                this.flag = false;
+                
+                },
+
+            },
+        })
+        
+    </script>
+</body>
+</html>
