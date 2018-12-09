@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue的基本 代码</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+            <login></login>     
+        <input type="button" value="放大字号" @click ="postFontSize++"  >
+        <!-- {{插值表达式}} -->
+        
+                <!-- //因为我组件模板渲染的post1,但是我想用构造函数new Vue里面的data里面的post内容,所以我进行了替换,
+                把post1更换成遍历的数值 -->
+                <counter :style="{ fontSize: postFontSize + 'px' }"  v-for =  'i in post' :post1 = i.name :key = 'i.id'></counter>
+
+    </div>
+
+
+    <!-- //在app外面新建一个标签,idtp2-->
+    <!-- <div id="tp2"></div> -->
+
+
+    <script>
+
+        
+
+
+        // 组件是可复用的Vue实例
+        //通过Vue.compoent定义一个组件,第一个参数组件名
+        //每创建一个组件标签的时候,就会实例一个实例对象,各自维护自己的数据,不会共用
+        //一个组建的data必须是一个函数      
+        // Vue.component('counter',{
+        //当prop值中有数据的时候,这个数据就变成了组建的一部分
+        Vue.component('counter', {
+            data:function(){
+                return {
+                    msg:'meagess!!',
+                }
+            },
+            methods:{
+                sayHi:function(){
+                    return;
+                }
+            },
+            props:['post1'],
+            // props:['haha'],//当prop值中有数据的时候,这个数据就变成了组建的一部分
+            template:'<h3  >{{post1}}</h3>',//模版定义必须是嵌套标签,只能有一个根元素
+            // template:'#tp2',//
+        })
+
+        var vm = new Vue({//new Vue的这个实例,就是MVVM中的VM层
+            el: '#app',//表示当创建一个vue实例之后,要控制那个区域
+            data: {
+                post: [
+                {id: 1, name: '张三',}, 
+                { id: 2, name: '李四', },
+                { id: 3, name: '麻五', },
+            ],
+            postFontSize:19,
+            },
+            //定义私有化组件
+            components:{
+                login:{//html 引用 <login></login>    
+                    template:'<h1>login</h1>'
+                },
+            }
+        })
+
+    </script>
+</body>
+
+</html>

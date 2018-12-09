@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义指令</title>
+    <script src="./day02/lib/vue-2.4.0.js">
+        
+    </script>
+</head>
+<body>
+    
+    <div id="app">
+
+        <input v-focus type="text" name="" id="">
+        <input v-focus1 type="text" name="" id="">
+
+        <h1>{{msg | cp　}}</h1> 
+
+        <h1>{{msga | mycp }}</h1> 
+
+        <login ></login>
+
+        <!-- 过滤器 -->
+
+    </div>
+    <h1 >下面是APP1</h1>
+    <div id="app1">
+
+        <input  v-focus type="text" name="" id="">
+
+       <register  @func = show ></register>
+        
+
+    </div>
+    
+    <!-- 自定义一个全局指令 -->
+
+
+    <script>
+
+        //第一一个全局模板
+
+        Vue.component('login',{
+            data(){
+                return {
+                    color:'blue',
+                }
+            },
+            methods:{
+              chnageColor:function(e){//e.tatget就是水触发的这个点击事件
+
+                e.target.style.color = 'red';
+                
+                
+              }  
+            },
+            template:'<h2 @click = "chnageColor" >我是一个全局模板{{color}}</h2>',
+        })
+
+//---------------------------------------------------
+        //定义个全局的过滤器
+
+        Vue.filter('cp',function(val){
+            return val.replace(/A/,'B');
+        });
+
+// ／／－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+        //定义一个全局自定义指令
+    Vue.directive('focus',{
+        inserted(el){//元素插入到DOM是调用
+            el.style.outline = "none";
+
+            el.style.border = '2px solid red';
+            }
+        }
+    )
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'我是一个App',
+                msga:'musicA上',
+
+            },
+
+            //进行一个局部的自定义指定,只支持app下面的控制的元素
+            directives:{
+                focus1:{
+                    inserted(el){
+                        el.style.outline = 'none';
+                        el.style.border = '2px solid blue';
+                    },
+                },
+            },
+
+            //-------------------------------
+            // 定义一个局部过滤去
+                filters:{
+                    mycp:function(val){
+                        return val.replace(/A/,'C');
+                        
+                    },
+                },
+
+                methods:{
+                    
+            
+        }});
+
+        
+       
+
+        var vm1 = new Vue({
+            el:'#app1',
+        
+            methods:{
+                show(){
+                    console.log(123);
+                },
+               
+            },
+
+            components:{
+                'register':{
+            template:' <h1  @click = "fk" >我是APP1的局部组件,我将触发父组件的方法</h1>',//点击click的时候,触发func.func触发show
+            methods:{
+                fk(){
+                    this.$emit('func',12);
+                    console.log('fk');
+                },
+
+            }
+                },
+            }
+        });
+        
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <script src="./lib/vue-router.min.js"></script>
+    <style>
+    .router-link-active{
+        /* 路由高亮 */
+        color: blue;
+        font-weight: 700;
+    }
+    .v-enter,.v-leave-to{
+        opacity: 0;
+    }
+    .v-enter-active,.v-leave-active{
+        transition: all 0.4s ease 0s;
+    }
+    
+    </style>
+</head>
+<body>
+    <div id='app'>
+            <!-- <a href="#/login">登录</a>
+            <a href="#/register">注册</a>   不推荐这样写-->
+
+            <!-- tag指定标签 -->
+
+            <!-- 如果在路由中传参,类似于http的get方式传参 -->
+            <router-link to="/login" tag="span">登录</router-link>
+            <router-link to="/register" tag="span">注册</router-link>
+
+        <transition mode = 'out-in'>
+                <router-view></router-view>
+        
+        </transition>
+       
+    </div>
+    <script>
+        //创建一个路由对象,当导包之后
+        
+        var login = {
+            template:'<h1>login登陆组件</h1>',
+            created(){
+                console.log(this.$route.query.id)//通过$this.$route.query.key 可以拿到url的值
+                console.log(this);
+            },
+            
+        }
+
+         var register = {
+            template:'<h1>register注册组件</h1>',
+        }
+
+        var routerObj = new VueRouter({
+
+            routes:[{path:"/login",component:login},
+            {path:'/register',component:register},
+           // {path:'/',component:login},//设置根目录展示的组件/路由匹配规则,每个规则都是一个对象,
+               {path:'/',redirect:'/login?id=10&name = zs'}    ,                     // 每个对象有2个属性,第一个属性path,监听地址,属性二component,展示的组件
+            
+            ],
+
+
+        });
+
+
+        var vm  = new Vue({
+            el:'#app',
+            data:{},
+            mouthods:{},
+            router:routerObj,//通过router属性,把上面的touterObj注册到vm实例上
+
+            //通过watch来监听路由的该笔那
+
+            watch:{
+                '$route.path':function(newVal,oldVal){
+                console.log(newVal);
+                    
+                }
+            }
+        });
+    </script>
+</body>
+</html>

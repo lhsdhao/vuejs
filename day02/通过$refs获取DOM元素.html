@@ -5,19 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>vue的基本 代码</title>
-    <script src="./lib/vue-2.4.0.js"></script>
+    <script src="./day02/lib/vue-2.4.0.js"></script>
+   
 </head>
 <body>
     <div id="app">
         <!-- {{插值表达式}} -->
-        <p >{{ msg }}</p>
+        <p ref = 'p' >P</p>
+        <!-- 通过使用ref进行标记一下,然后通过thsi.$refs.标记变量进行获取DOM元素 -->
     </div>
     <script>
         var vm = new Vue({//new Vue的这个实例,就是MVVM中的VM层
             el:'#app',//表示当创建一个vue实例之后,要控制那个区域
             data:{//data属性中,存放的是el中要用到的数据
                 msg:'欢迎学习vue',//通过指令,直接渲染到界面,不需要操作DOM
+            },
+            mounted(){
+                console.log(this.$refs.p.innerText);
             }
+
+
         })
         
     </script>
